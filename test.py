@@ -3,7 +3,7 @@ from sympy.parsing.sympy_parser import parse_expr, standard_transformations, imp
 from sympy.abc import x
 from sympy.solvers.solveset import substitution
 from sympy.utilities.lambdify import lambdify, implemented_function
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt, mpld3
 from sympy import Function
 from sympy import *
 import numpy as np
@@ -11,7 +11,7 @@ import matplotlib.patches as polyplot
 
 
 def integral_plot(f, a, b, N, dx):
-
+    
     x = np.linspace(a, b, num=N)
     y = f(x)
     fig, ax = plt.subplots()
@@ -30,7 +30,8 @@ def integral_plot(f, a, b, N, dx):
     poly = polyplot.Polygon(t, facecolor='0.9', edgecolor='0.5')
     ax.add_patch(poly)
 
-    plt.show()
+    mpld3.show()
+    plt.savefig('integral.png')
 
 
 def f():
