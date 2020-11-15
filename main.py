@@ -5,7 +5,7 @@ from sympy.parsing.sympy_parser import parse_expr
 from sympy.abc import x
 from sympy.utilities.lambdify import lambdify, implemented_function
 from sympy import Function
-
+import matplotlib.pyplot as plot
 
 def parse(expresion):
     return parse_expr(expresion)
