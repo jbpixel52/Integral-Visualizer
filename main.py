@@ -1,11 +1,8 @@
-
-# Vengo corriendo a desearles un feliz jueves! : D
+# %%
 from flask import Flask, redirect, url_for, render_template, request
 from sympy.parsing.sympy_parser import parse_expr
 from sympy.utilities.lambdify import lambdify, implemented_function
-from sympy import Function
 import matplotlib.pyplot as plot
-import mld3
 from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication_application, convert_xor
 from sympy.abc import x
 from sympy.solvers.solveset import substitution
@@ -41,27 +38,26 @@ def graphic():
     return render_template('login.html', error=error)
 
 
-equation_parsed = parse('x**2')
-
-
-def f():
+def f(xyz):
     """ESTA FUNCION AGARRA UNA FUNCION COMO UN STRING Y LA TRANSFORMA A UNA EXPRESION DE SYMPY, LA CUAL SE LE HACEN TRANSFORMACIONES PARA QUE CUALQUIER TIPO DE FUNCION MATEMATICA SEA VALIDA AL MOMENTO DE EVALUAR; P.E: x*cos(x!*x)"""
     transformations = (standard_transformations +
                        (implicit_multiplication_application,) + (convert_xor,))
-    parsed = parse_expr(input(), evaluate=False,
+    parsed = parse_expr(xyz, evaluate=True,
                         transformations=transformations)
     print(parsed)
     z = symbols('z')
 
-    print(parsed.subs(x, 5))
+    print('se ha parseado tio!')
 
     return lambdify(x, parsed, 'numpy')
 
 
-def integral_plot(f, a, b, N, dx):
+def integral_plot(f, a, b, N):
+
     x = np.linspace(a, b, num=N)
     y = f(x)
-    fig, ax = plot.subplots()
+    #fig = plot.subplots()
+    ax = plot.subplots()
     ax.plot(x, y, 'ro', linewidth=3, color='pink')
     plot.grid(True, linestyle=':')
     plot.title(f'Integral')
@@ -71,9 +67,13 @@ def integral_plot(f, a, b, N, dx):
     ix = np.linspace(a, b, num=N)
     iy = f(ix)
     verts = [(a, 0), *zip(ix, iy), (b, 0)]
-    poly = Polygon(verts, facecolor='0.9', edgecolor='0.5')
+    t = tuple(verts)
+    p = Polygon(*t)
+    plot.Polygon
+    poly = polyplot.Polygon(t, facecolor='0.9', edgecolor='0.5')
     ax.add_patch(poly)
     plot.show()
+    return plot.savefig('static/photos/integral.png')
 
 
 @app.route('/trapz')
@@ -98,16 +98,17 @@ def simps(f, a, b, N=50):
 
 @app.route('/butt', methods=["GET", "POST"])
 def butt():
-    try:
-        a = request.form['a']
-        b = request.form['b']
-        n = request.form['n']
-        ecuacion = request.form['ecuacion']
-        print("{} {} {} {}".format(a, b, n, ecuacion))
-        print(request.form['button'])
-    except:
-        print("no")
-        pass
+    a = float(request.form['a'])
+    b = float(request.form['b'])
+    n = int(request.form['n'])
+    ecuacion = request.form['ecuacion']
+    print("tipo de la ecuacion:", type(ecuacion))
+    print("tipo de la a:", type(a))
+    print("tipo de la b:", type(b))
+    print("{} {} {} {}".format(a, b, n, ecuacion))
+    print(request.form['button'])
+    integral_plot(f(ecuacion), a, b, n)
+
     return render_template('graph.html')
 
 
