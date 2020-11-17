@@ -9,7 +9,7 @@
   <body {background-color:coral;}>
     <h1>GRAFICACION DE AREAS DE INTEGRALES</h1>
 
-    <form action="/plot" method="POST">
+    <form action="{{ url_for('butt') }}" method="POST">
       <label>f(x):</label>
       <input
         type="text"
@@ -48,9 +48,9 @@
       />
       <br />
       <br />
-      <button type="submit" class="btn btn-primary">Trapecio</button>
-      <button type="submit" class="btn btn-primary">Simpson 1/3</button>
-      <button type="submit" class="btn btn-primary">Simpson 3/8</button>
+      <button type="submit" name="button" value="trapecio" class="btn btn-primary" style="background:gray" href="/butt">Trapecio</a>
+      <button type="submit" name="button" value="simpson1_3" class="btn btn-primary" style="background:gray" href="/butt">Simpson 1/3</a>
+      <button type="submit" name="button" value="simpson3_8" class="btn btn-primary" style="background:gray" href="/butt">Simpson 3/8</a>
     </form>
   </body>
 </html>
