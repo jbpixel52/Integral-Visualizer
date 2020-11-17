@@ -2,10 +2,17 @@
 ## Vengo corriendo a desearles un feliz jueves! : D
 from flask import Flask,redirect,url_for,render_template,request
 from sympy.parsing.sympy_parser import parse_expr
-from sympy.abc import x
 from sympy.utilities.lambdify import lambdify, implemented_function
 from sympy import Function
-import matplotlib.pyplot as plot
+import matplotlib.pyplot as plot, mld3
+from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication_application, convert_xor
+from sympy.abc import x
+from sympy.solvers.solveset import substitution
+from sympy.utilities.lambdify import lambdify, implemented_function
+from sympy import *
+import numpy as np
+import matplotlib.patches as polyplot
+
 
 def parse(expresion):
     return parse_expr(expresion)
@@ -34,18 +41,28 @@ def graphic():
 equation_parsed = parse('x**2')
 
 
-def funcion(x):
-    return x+1
-    
+
+def f():
+    """ESTA FUNCION AGARRA UNA FUNCION COMO UN STRING Y LA TRANSFORMA A UNA EXPRESION DE SYMPY, LA CUAL SE LE HACEN TRANSFORMACIONES PARA QUE CUALQUIER TIPO DE FUNCION MATEMATICA SEA VALIDA AL MOMENTO DE EVALUAR; P.E: x*cos(x!*x)"""
+    transformations = (standard_transformations +
+                       (implicit_multiplication_application,) + (convert_xor,))
+    parsed = parse_expr(input(), evaluate=False,
+                        transformations=transformations)
+    print(parsed)
+    z = symbols('z')
+
+    print(parsed.subs(x, 5))
+
+    return lambdify(x, parsed, 'numpy')
 
 def integral_plot(f,a,b,N,dx):
     x = np.linspace(a, b, num=N)
     y = f(x)
-    fig, ax = plt.subplots()
+    fig, ax = plot.subplots()
     ax.plot(x, y, 'ro', linewidth=3,color='pink') 
-    plt.grid(True,linestyle=':')
-    plt.title(f'Integral')
-    plt.plot(legend=f'x:[{x}]')
+    plot.grid(True,linestyle=':')
+    plot.title(f'Integral')
+    plot.plot(legend=f'x:[{x}]')
     
     # Make the shaded region
     ix = np.linspace(a, b,num=N)
@@ -53,7 +70,7 @@ def integral_plot(f,a,b,N,dx):
     verts = [(a, 0), *zip(ix, iy), (b, 0)]
     poly = Polygon(verts, facecolor='0.9', edgecolor='0.5')
     ax.add_patch(poly)
-    plt.show()
+    plot.show()
 
 @app.route('/trapz')
 def trapz(f, a, b, N=50):
