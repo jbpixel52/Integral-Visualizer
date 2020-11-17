@@ -74,9 +74,19 @@ def simps(f, a, b, N=50):
     return S
 
 
-@app.route('/butt')
-def butt(name=None, methods=["GET","POST"]):
-    return render_template('graph.html', name=name)
+@app.route('/butt', methods=["GET","POST"])
+def butt():
+    try:
+        a = request.form['a']
+        b = request.form['b']
+        n = request.form['n']
+        ecuacion = request.form['ecuacion']
+        print("{} {} {} {}".format(a,b,n,ecuacion))
+        print(request.form['button'])
+    except:
+        print("no")
+        pass
+    return render_template('graph.html')
 
 
 
