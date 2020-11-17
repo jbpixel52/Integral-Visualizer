@@ -1,10 +1,11 @@
 
-## Vengo corriendo a desearles un feliz jueves! : D
-from flask import Flask,redirect,url_for,render_template,request
+# Vengo corriendo a desearles un feliz jueves! : D
+from flask import Flask, redirect, url_for, render_template, request
 from sympy.parsing.sympy_parser import parse_expr
 from sympy.utilities.lambdify import lambdify, implemented_function
 from sympy import Function
-import matplotlib.pyplot as plot, mld3
+import matplotlib.pyplot as plot
+import mld3
 from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication_application, convert_xor
 from sympy.abc import x
 from sympy.solvers.solveset import substitution
@@ -18,11 +19,13 @@ def parse(expresion):
     return parse_expr(expresion)
 
 
-app= Flask(__name__)
+app = Flask(__name__)
+
 
 @app.route("/")
-def index(name=None, methods=["GET","POST"]):
-    return render_template("index.html",name=name)
+def index(name=None, methods=["GET", "POST"]):
+    return render_template("index.html", name=name)
+
 
 @app.route("/plot")
 def graphic():
@@ -41,7 +44,6 @@ def graphic():
 equation_parsed = parse('x**2')
 
 
-
 def f():
     """ESTA FUNCION AGARRA UNA FUNCION COMO UN STRING Y LA TRANSFORMA A UNA EXPRESION DE SYMPY, LA CUAL SE LE HACEN TRANSFORMACIONES PARA QUE CUALQUIER TIPO DE FUNCION MATEMATICA SEA VALIDA AL MOMENTO DE EVALUAR; P.E: x*cos(x!*x)"""
     transformations = (standard_transformations +
@@ -55,22 +57,24 @@ def f():
 
     return lambdify(x, parsed, 'numpy')
 
-def integral_plot(f,a,b,N,dx):
+
+def integral_plot(f, a, b, N, dx):
     x = np.linspace(a, b, num=N)
     y = f(x)
     fig, ax = plot.subplots()
-    ax.plot(x, y, 'ro', linewidth=3,color='pink') 
-    plot.grid(True,linestyle=':')
+    ax.plot(x, y, 'ro', linewidth=3, color='pink')
+    plot.grid(True, linestyle=':')
     plot.title(f'Integral')
     plot.plot(legend=f'x:[{x}]')
-    
+
     # Make the shaded region
-    ix = np.linspace(a, b,num=N)
+    ix = np.linspace(a, b, num=N)
     iy = f(ix)
     verts = [(a, 0), *zip(ix, iy), (b, 0)]
     poly = Polygon(verts, facecolor='0.9', edgecolor='0.5')
     ax.add_patch(poly)
     plot.show()
+
 
 @app.route('/trapz')
 def trapz(f, a, b, N=50):
@@ -82,6 +86,7 @@ def trapz(f, a, b, N=50):
     T = (dx/2) * np.sum(y_right + y_left)
     return T
 
+
 @app.route('/simps1')
 def simps(f, a, b, N=50):
     dx = (b-a)/N
@@ -91,14 +96,14 @@ def simps(f, a, b, N=50):
     return S
 
 
-@app.route('/butt', methods=["GET","POST"])
+@app.route('/butt', methods=["GET", "POST"])
 def butt():
     try:
         a = request.form['a']
         b = request.form['b']
         n = request.form['n']
         ecuacion = request.form['ecuacion']
-        print("{} {} {} {}".format(a,b,n,ecuacion))
+        print("{} {} {} {}".format(a, b, n, ecuacion))
         print(request.form['button'])
     except:
         print("no")
@@ -106,7 +111,5 @@ def butt():
     return render_template('graph.html')
 
 
-
-
-if __name__== "__main__":
-    app.run(debug=True,use_reloader=False)
+if __name__ == "__main__":
+    app.run(debug=True, use_reloader=False)
