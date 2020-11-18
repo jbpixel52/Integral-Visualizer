@@ -60,10 +60,10 @@ def f(xyz):
 
 
 def integral_plot(f, a, b, N):
-    text = f"trapecio:{trapz(f,a,b,N)}\n1/8:{simps(f,a,b,N)}\n3/8:{simps(f,a,b,N)}"
-    temptrap = float(trapz(f, a, b, N))
-    temp18 = float(simps(f, a, b, N))
-    temp38 = float(simpson38(f,a,b,N))
+    temptrap = "%.3f" %(float(trapz(f, a, b, N)))
+    temp18 =  "%.3f" %(float(simps(f, a, b, N)))
+    temp38 =  "%.3f" %(float(simpson38(f,a,b,N)))
+    text = f"trapecio:{temptrap}  1/8:{temp18}\n3/8:{temp38}"
     x = np.linspace(a, b, num=N)
     y = f(x)
     fig, ax = plt.subplots()
@@ -72,12 +72,9 @@ def integral_plot(f, a, b, N):
     plt.grid(True, linestyle=':')
     plt.title(f'Integral')
     plt.plot(legend=f'x:[{x}]')    # Make the shaded region
-    ax.text(.7, 0.8, f'trapecio: {temptrap}',
+    ax.text(.2, 0.9, f'{text}',
             bbox=dict(facecolor='#808080', alpha=0.5))
-    ax.text(.7, 0.7, f'Simpson 1/8: {temp18}',
-            bbox=dict(facecolor='#808080', alpha=0.5))
-    ax.text(.7, 0.6, f'Simpson 3/8: {temp38}',
-            bbox=dict(facecolor='#808080', alpha=0.5))
+
     ix = np.linspace(a, b, num=N)
     iy = f(ix)
     verts = [(a, 0), *zip(ix, iy), (b, 0)]
