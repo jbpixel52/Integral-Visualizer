@@ -62,7 +62,7 @@ def integral_plot(f, a, b, N):
     x = np.linspace(a, b, num=N)
     y = f(x)
     fig, ax = plt.subplots()
-    ax.set_facecolor('k')
+    ax.set_facecolor('xkcd:salmon')
     ax.plot(x, y, 'ro', linewidth=3, color='pink')
     plt.grid(True, linestyle=':')
     plt.title(f'Integral')
@@ -114,7 +114,7 @@ def butt():
     print(request.form['button'])
     integral_plot(f(ecuacion), a, b, n)
 
-    return render_template('graph.html', url="static/photos/integral.png")
+    return render_template('index.html', url="static/photos/integral.png")
 
 
 if __name__ == "__main__":

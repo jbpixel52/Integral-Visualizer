@@ -1,57 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <head>
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-4ZPLezkTZTsojWFhpdFembdzFudphhoOzIunR1wH6g1WQDzCAiPvDyitaK67mp0+" crossorigin="anonymous">
-    <title>Home Page</title>
-  </head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <body {background-color:coral;}>
-    <h1>GRAFICACION DE AREAS DE INTEGRALES</h1>
+<head>
+  <style>
+    body {
+      background-color: cornsilk;
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
+      text-align: center;
+    }
 
-    <form action="{{ url_for('butt') }}" method="POST">
-      <label>f(x):</label>
-      <input
-        type="text"
-        id="ecuacion"
-        name="ecuacion"
-        placeholder="Escribe la ecuacion"
-        id="myInput"
-      />
-      <br />
-      <br />
-      <label>a:</label>
-      <input
-        type="text"
-        id="a"
-        name="a"
-        placeholder="Ingrese el primer punto"
-        id="myInput"
-      />
+    button {
+      background-color: lightskyblue;
+      font-weight: 200;
+      border-radius: 10%;
+      padding: 20px;
+      width: auto;
+      height: auto;
 
-      <label>b:</label>
-      <input
-        type="text"
-        id="b"
-        name="b"
-        placeholder="Ingrese el segundo punto"
-        id="myInput"
-      />
+    }
 
-      <label>n:</label>
-      <input
-        type="text"
-        id="n"
-        name="n"
-        placeholder="Ingrese el numero de iteraciones"
-        id="myInput"
-      />
-      <br />
-      <br />
-      <button type="submit" name="button" value="trapecio" class="pure-button pure-button-primary" style="background:gray" href="/butt">Trapecio</a>
-      <button type="submit" name="button" value="simpson1_3" class="btn btn-primary" style="background:gray" href="/butt">Simpson 1/3</a>
-      <button type="submit" name="button" value="simpson3_8" class="btn btn-primary" style="background:gray" href="/butt">Simpson 3/8</a>
-    </form>
-  </body>
+    h1 {
+      color: hotpink;
+    }
+  </style>
+  <title>GRAFICADOR DE INTEGRALES</title>
+</head>
+
+<body>
+  <h1>GRAFICACION DE AREAS DE INTEGRALES</h1>
+  <div>    <p>
+    
+    <picture><img src="{{url}}"></picture>
+</p></div>
+
+  <form action="{{ url_for('butt') }}" method="POST">
+    <label>f(x):</label>
+    <input type="text" id="ecuacion" name="ecuacion" placeholder="Escribe la ecuacion" id="myInput" />
+    <br />
+    <br />
+    <label>a:</label>
+    <input type="text" id="a" name="a" placeholder="Ingrese el primer punto" id="myInput" />
+
+    <label>b:</label>
+    <input type="text" id="b" name="b" placeholder="Ingrese el segundo punto" id="myInput" />
+
+    <label>n:</label>
+    <input type="text" id="n" name="n" placeholder="Ingrese el numero de iteraciones" id="myInput" />
+    <br />
+    <br />
+    <button type="submit" name="button" value="trapecio" class="primary" href="/butt">Trapecio</a>
+      <button type="submit" name="button" value="simpson1_3" class="primary" href="/butt">Simpson 1/3</a>
+        <button type="submit" name="button" value="simpson3_8" class="primary" href="/butt">Simpson 3/8</a>
+  </form>
+
+</body>
+
 </html>
