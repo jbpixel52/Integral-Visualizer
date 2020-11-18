@@ -7,14 +7,14 @@
   <style>
     body {
       background-color:#212121;
-      font-family: "Trebuchet MS", Helvetica, sans-serif;
+      font-family: sans-serif;
       text-align: center;
-      color: #ffffff;
+      color: #FFFFFF;
     }
 
     button {
       background-color: #ffa31a;
-      font-weight: 500;
+      font-weight: 900;
       font-size: xx-large;
       text-decoration: wavy;
       border-radius: 25px;
@@ -29,14 +29,9 @@ color: 	#ffa31a;
     }
 
     h1 {
-      display: block;
-      justify-content: center;
-width: 50%;
-margin-left: 25%;
-margin-right: 25%;
-      color:  	#212121;
-      background-color: #ffa31a;
-      border-radius: 25px;
+      display:flex;
+      flex-wrap: wrap;
+      
   
     }
     input{
@@ -49,16 +44,42 @@ margin-right: 25%;
     div{
       display: flex;
       justify-content: space-between;
-      max-width: 20%;
+      max-width: 25%;
       margin: auto;
-      padding: 10px;
+      padding: 5px;
     }
+    .title{
+      display: flex;
+      justify-content:baseline;
+      max-width: 10%;
+      margin: auto;
+
+    }
+    .hub{
+      background-color: #ffa31a;
+      border-radius:9px;
+      padding: 0 1vw 1vw 1vw;
+      color: #212121;
+      width: auto;
+      padding: 2%;
+      height: auto;
+      font-weight: bold;
+    }
+    .nohub{
+      width: auto;
+font-weight: bold;
+
+        height: auto;
+        padding: 2%;
+
+      }
+    
   </style>
   <title>GRAFICADOR DE INTEGRALES</title>
 </head>
 
 <body>
-  <h1>GRAFICACION DE AREAS DE INTEGRALES</h1>
+  <div class="title"><h2 class="nohub">Graficador </h2><h2 class="hub">integrales</h2></div>
 
     
     <picture><img src="{{url}}"></picture>

@@ -69,15 +69,15 @@ def integral_plot(f, a, b, N):
     fig, ax = plt.subplots()
     ax.set_facecolor('#ffa31a')
     ax.plot(x, y, 'ro', linewidth=3, color='pink')
+    plt.grid(True, linestyle=':')
+    plt.title(f'Integral')
+    plt.plot(legend=f'x:[{x}]')    # Make the shaded region
     ax.text(.7, 0.8, f'trapecio: {temptrap}',
             bbox=dict(facecolor='#808080', alpha=0.5))
     ax.text(.7, 0.7, f'Simpson 1/8: {temp18}',
             bbox=dict(facecolor='#808080', alpha=0.5))
     ax.text(.7, 0.6, f'Simpson 3/8: {temp38}',
             bbox=dict(facecolor='#808080', alpha=0.5))
-    plt.grid(True, linestyle=':')
-    plt.title(f'Integral')
-    plt.plot(legend=f'x:[{x}]')    # Make the shaded region
     ix = np.linspace(a, b, num=N)
     iy = f(ix)
     verts = [(a, 0), *zip(ix, iy), (b, 0)]
@@ -85,7 +85,7 @@ def integral_plot(f, a, b, N):
     p = Polygon(*t)
     plt.Polygon
 
-    poly = polyplot.Polygon(t, facecolor='0.9', edgecolor='0.5')
+    poly = polyplot.Polygon(t, facecolor='#212121', edgecolor='0.8')
     ax.add_patch(poly)
     # plot.show()
     plt.savefig('static/photos/integral.png')
