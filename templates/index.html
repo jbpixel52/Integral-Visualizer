@@ -6,23 +6,44 @@
 <head>
   <style>
     body {
-      background-color: cornsilk;
+      background-color:#212121;
       font-family: "Trebuchet MS", Helvetica, sans-serif;
       text-align: center;
+      color: #ffffff;
     }
 
     button {
-      background-color: lightskyblue;
-      font-weight: 200;
-      border-radius: 10%;
-      padding: 20px;
-      width: auto;
+      background-color: #66bb6a;
+      font-weight: 500;
+      font-size: xx-large;
+      text-decoration: wavy;
+      border-radius: 5%;
+      padding: 50px;
+      width: 100%;
       height: auto;
 
     }
+    button:hover{
+      background-color: #69F0AE;
+color:#e91e63;
+    }
 
     h1 {
-      color: hotpink;
+      color: #e91e63;
+    }
+    input{
+            font-weight: 200;
+      border-radius: 5%;
+      padding: 10px;
+      width: auto;
+      height: auto;
+    }
+    div{
+      display: flex;
+      justify-content: space-between;
+      max-width: 20%;
+      margin: auto;
+      padding: 10px;
     }
   </style>
   <title>GRAFICADOR DE INTEGRALES</title>
@@ -30,10 +51,10 @@
 
 <body>
   <h1>GRAFICACION DE AREAS DE INTEGRALES</h1>
-  <div>    <p>
+
     
     <picture><img src="{{url}}"></picture>
-</p></div>
+
 
   <form action="{{ url_for('butt') }}" method="POST">
     <label>f(x):</label>
@@ -50,9 +71,9 @@
     <input type="text" id="n" name="n" placeholder="Ingrese el numero de iteraciones" id="myInput" />
     <br />
     <br />
-    <button type="submit" name="button" value="trapecio" class="primary" href="/butt">Trapecio</a>
-      <button type="submit" name="button" value="simpson1_3" class="primary" href="/butt">Simpson 1/3</a>
-        <button type="submit" name="button" value="simpson3_8" class="primary" href="/butt">Simpson 3/8</a>
+    <div>
+    <button type="submit" name="button" value="trapecio" class="primary" href="/butt">C A L C U L A R</a>
+ 
   </form>
 
 </body>

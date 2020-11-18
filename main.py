@@ -14,12 +14,14 @@ mpl.use('Agg')
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
+
 @app.after_request
 def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
+
 
 def parse(expresion):
     return parse_expr(expresion)
@@ -58,23 +60,31 @@ def f(xyz):
 
 
 def integral_plot(f, a, b, N):
-    print(mpl.__version__)
+    text = f"trapecio:{trapz(f,a,b,N)}\n1/8:{simps(f,a,b,N)}\n3/8:{simps(f,a,b,N)}"
+    temptrap = float(trapz(f, a, b, N))
+    temp18 = float(simps(f, a, b, N))
+    temp38 = float(simpson38(f,a,b,N))
     x = np.linspace(a, b, num=N)
     y = f(x)
     fig, ax = plt.subplots()
-    ax.set_facecolor('xkcd:salmon')
+    ax.set_facecolor('#e91e63')
     ax.plot(x, y, 'ro', linewidth=3, color='pink')
+    ax.text(.7, 0.8, f'trapecio: {temptrap}',
+            bbox=dict(facecolor='#e91e63', alpha=0.5))
+    ax.text(.7, 0.7, f'Simpson 1/8: {temp18}',
+            bbox=dict(facecolor='#e91e63', alpha=0.5))
+    ax.text(.7, 0.6, f'Simpson 3/8: {temp38}',
+            bbox=dict(facecolor='#e91e63', alpha=0.5))
     plt.grid(True, linestyle=':')
     plt.title(f'Integral')
-    plt.plot(legend=f'x:[{x}]')
-
-    # Make the shaded region
+    plt.plot(legend=f'x:[{x}]')    # Make the shaded region
     ix = np.linspace(a, b, num=N)
     iy = f(ix)
     verts = [(a, 0), *zip(ix, iy), (b, 0)]
     t = tuple(verts)
     p = Polygon(*t)
     plt.Polygon
+
     poly = polyplot.Polygon(t, facecolor='0.9', edgecolor='0.5')
     ax.add_patch(poly)
     # plot.show()
@@ -82,7 +92,7 @@ def integral_plot(f, a, b, N):
 
 
 @app.route('/trapz')
-def trapz(f, a, b, N=50):
+def trapz(f, a, b, N):
     x = np.linspace(a, b, N+1)  # N+1 points make N subintervals
     y = f(x)
     y_right = y[1:]  # right endpoints
@@ -93,7 +103,7 @@ def trapz(f, a, b, N=50):
 
 
 @app.route('/simps1')
-def simps(f, a, b, N=50):
+def simps(f, a, b, N):
     dx = (b-a)/N
     x = np.linspace(a, b, N+1)
     y = f(x)
@@ -115,6 +125,19 @@ def butt():
     integral_plot(f(ecuacion), a, b, n)
 
     return render_template('index.html', url="static/photos/integral.png")
+
+
+def simpson38(f, a, b, N):
+    h = (b - a) / N
+    integration = f(a) + f(b)
+    for i in range(1, N):
+        k = a + i*h
+        if i % 2 == 0:
+            integration = integration + 2 * f(k)
+        else:
+            integration = integration + 3 * f(k)
+    integration = integration * 3 * h / 8
+    return integration
 
 
 if __name__ == "__main__":
