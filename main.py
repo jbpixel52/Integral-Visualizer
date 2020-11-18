@@ -1,15 +1,12 @@
-# %%
 from flask import Flask, redirect, url_for, render_template, request
-from sympy.parsing.sympy_parser import parse_expr
 from sympy.utilities.lambdify import lambdify, implemented_function
-import matplotlib.pyplot as plot
 from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication_application, convert_xor
-from sympy.abc import x
 from sympy.solvers.solveset import substitution
-from sympy.utilities.lambdify import lambdify, implemented_function
+from sympy.abc import x
 from sympy import *
 import numpy as np
 import matplotlib.patches as polyplot
+import matplotlib.pyplot as plot
 
 
 def parse(expresion):
@@ -56,8 +53,7 @@ def integral_plot(f, a, b, N):
 
     x = np.linspace(a, b, num=N)
     y = f(x)
-    #fig = plot.subplots()
-    ax = plot.subplots()
+    fig, ax = plot.subplots()
     ax.plot(x, y, 'ro', linewidth=3, color='pink')
     plot.grid(True, linestyle=':')
     plot.title(f'Integral')
@@ -72,8 +68,8 @@ def integral_plot(f, a, b, N):
     plot.Polygon
     poly = polyplot.Polygon(t, facecolor='0.9', edgecolor='0.5')
     ax.add_patch(poly)
-    plot.show()
-    return plot.savefig('static/photos/integral.png')
+    ##plot.show()
+    plot.savefig('static/photos/integral.png')
 
 
 @app.route('/trapz')
@@ -109,7 +105,7 @@ def butt():
     print(request.form['button'])
     integral_plot(f(ecuacion), a, b, n)
 
-    return render_template('graph.html')
+    return render_template('graph.html', url="static/photos/integral.png")
 
 
 if __name__ == "__main__":
