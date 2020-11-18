@@ -1,19 +1,28 @@
-from flask import Flask, redirect, url_for, render_template, request
-from sympy.utilities.lambdify import lambdify, implemented_function
-from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication_application, convert_xor
-from sympy.solvers.solveset import substitution
-from sympy.abc import x
-from sympy import *
-import numpy as np
 import matplotlib.patches as polyplot
-import matplotlib.pyplot as plot
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import numpy as np
+from flask import Flask, redirect, render_template, request, url_for
+from sympy import *
+from sympy.abc import x
+from sympy.parsing.sympy_parser import (convert_xor,
+                                        implicit_multiplication_application,
+                                        parse_expr, standard_transformations)
+from sympy.solvers.solveset import substitution
+from sympy.utilities.lambdify import implemented_function, lambdify
+mpl.use('Agg')
+app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
+@app.after_request
+def after_request(response):
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
+    response.headers["Expires"] = 0
+    response.headers["Pragma"] = "no-cache"
+    return response
 
 def parse(expresion):
     return parse_expr(expresion)
-
-
-app = Flask(__name__)
 
 
 @app.route("/")
@@ -42,7 +51,6 @@ def f(xyz):
     parsed = parse_expr(xyz, evaluate=True,
                         transformations=transformations)
     print(parsed)
-    z = symbols('z')
 
     print('se ha parseado tio!')
 
@@ -50,14 +58,15 @@ def f(xyz):
 
 
 def integral_plot(f, a, b, N):
-
+    print(mpl.__version__)
     x = np.linspace(a, b, num=N)
     y = f(x)
-    fig, ax = plot.subplots()
+    fig, ax = plt.subplots()
+    ax.set_facecolor('k')
     ax.plot(x, y, 'ro', linewidth=3, color='pink')
-    plot.grid(True, linestyle=':')
-    plot.title(f'Integral')
-    plot.plot(legend=f'x:[{x}]')
+    plt.grid(True, linestyle=':')
+    plt.title(f'Integral')
+    plt.plot(legend=f'x:[{x}]')
 
     # Make the shaded region
     ix = np.linspace(a, b, num=N)
@@ -65,11 +74,11 @@ def integral_plot(f, a, b, N):
     verts = [(a, 0), *zip(ix, iy), (b, 0)]
     t = tuple(verts)
     p = Polygon(*t)
-    plot.Polygon
+    plt.Polygon
     poly = polyplot.Polygon(t, facecolor='0.9', edgecolor='0.5')
     ax.add_patch(poly)
-    ##plot.show()
-    plot.savefig('static/photos/integral.png')
+    # plot.show()
+    plt.savefig('static/photos/integral.png')
 
 
 @app.route('/trapz')
