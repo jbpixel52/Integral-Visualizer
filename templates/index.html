@@ -83,6 +83,11 @@ font-weight: bold;
 
     
     <picture><img src="{{url}}"></picture>
+    <p>VALOR REAL DE LA INTEGRAL: <h2>{{real_area}}</h2></p>
+    <ul>{% for item in comparacion %}
+      <li>{{item}}</li>
+      {% endfor %}
+    </ul>
 
 
   <form action="{{ url_for('butt') }}" method="POST">
@@ -98,13 +103,18 @@ font-weight: bold;
 
     <label>n:</label>
     <input type="text" id="n" name="n" placeholder="Ingrese el numero de iteraciones" id="myInput" />
+    <label>% de Error:</label>
+    <input type="text" id="porciento" name="porciento" placeholder="Ingrese el % de error deseado" id="myInput" />
     <br />
     <br />
     <div>
     <button type="submit" name="button" value="trapecio" class="primary" href="/butt">C A L C U L A R</a>
  
   </form>
-
+  <br></br>
+  {% if nice==true %}
+  <div><a href="https://www.pornhub.com/"><h1 class="hub">N I C E</h1></a></div>
+{% endif %}
 </body>
 
 </html>
