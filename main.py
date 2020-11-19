@@ -1,4 +1,4 @@
-from os import error
+
 import matplotlib.patches as polyplot
 import matplotlib.pyplot as plt
 import matplotlib as mpl
@@ -12,6 +12,8 @@ from sympy.parsing.sympy_parser import (convert_xor,
 from sympy.solvers.solveset import substitution
 from sympy.utilities.lambdify import implemented_function, lambdify
 import numexpr
+from uncertainties import ufloat
+from uncertainties.umath import *
 mpl.use('Agg')
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -98,19 +100,24 @@ def trapz(f, a, b, N):
     y_left = y[:-1]  # left endpoints
     dx = (b - a)/N
     T = (dx/2) * np.sum(y_right + y_left)
+    print(T)
     return T
 
 
 def simpson38(f, a, b, N):
-    h = (b - a) / N
-    integration = f(a) + f(b)
+    h = float((b - a) / N)
+    fa = f(a)
+    fb =f(b)
+    
+    integration = float(fa+fb)
     for i in range(1, N):
         k = a + i*h
         if i % 2 == 0:
-            integration = integration + 2 * f(k)
+            integration = integration + 2.0 * f(k)
         else:
-            integration = integration + 3 * f(k)
-    integration = integration * 3 * h / 8
+            integration = integration + 3.0 * f(k)
+    integration = integration * 3.0 * h / 8.0
+    print(simpson38)
     return integration
 
 
@@ -120,6 +127,7 @@ def simps(f, a, b, N):
     x = np.linspace(a, b, N+1)
     y = f(x)
     S = dx/3 * np.sum(y[0:-1:2] + 4*y[1::2] + y[2::2])
+    print(S)
     return S
 
 
