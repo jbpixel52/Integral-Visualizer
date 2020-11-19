@@ -144,7 +144,7 @@ def compare(areas, real, porcentage):
     
     output = []
     for i in range(len(metodos)):
-        output.append(f'{metodos[i]}:{areas[i]}; %Error:{errors[i]}')
+        output.append(f'{metodos[i]}: {areas[i]};   %Error: {errors[i]}')
     return output    
     
         
