@@ -11,9 +11,7 @@ from sympy.parsing.sympy_parser import (convert_xor,
                                         parse_expr, standard_transformations)
 from sympy.solvers.solveset import substitution
 from sympy.utilities.lambdify import implemented_function, lambdify
-import numexpr
-from uncertainties import ufloat
-from uncertainties.umath import *
+
 mpl.use('Agg')
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -89,8 +87,9 @@ def integral_plot(f, a, b, N):
     ax.add_patch(poly)
     # plot.show()
     plt.savefig('static/photos/integral.png')
-    calculos = [temptrap,temp18,temp38]
+    calculos = [temptrap, temp18, temp38]
     return calculos
+
 
 @app.route('/trapz')
 def trapz(f, a, b, N):
@@ -107,8 +106,8 @@ def trapz(f, a, b, N):
 def simpson38(f, a, b, N):
     h = float((b - a) / N)
     fa = f(a)
-    fb =f(b)
-    
+    fb = f(b)
+
     integration = float(fa+fb)
     for i in range(1, N):
         k = a + i*h
@@ -139,23 +138,23 @@ def realIntegral(xyz, a, b):
                         transformations=transformations)
     x = symbols('x')
     fprime = integrate(parsed, x)
-    flambda = lambdify(x,fprime,'numpy')
-    
+    flambda = lambdify(x, fprime, 'numpy')
+
     return float(flambda(b)-flambda(a))
-    
+
+
 def compare(areas, real, porcentage):
-    metodos = ['TRAPECIO','SIMPSON 1/8','SIMPSON 3/8']
-    errors=[]
+    metodos = ['TRAPECIO', 'SIMPSON 1/8', 'SIMPSON 3/8']
+    errors = []
     for x in areas:
         errors.append(abs((float(x)-float(real))/float(real))*100)
     best = min(errors)
-    
+
     output = []
     for i in range(len(metodos)):
         output.append(f'{metodos[i]}: {areas[i]};   %Error: {errors[i]}')
-    return output    
-    
-        
+    return output
+
 
 @app.route('/butt', methods=["GET", "POST"])
 def butt():
@@ -164,22 +163,22 @@ def butt():
     n = int(request.form['n'])
     ecuacion = request.form['ecuacion']
     tolerancia = float(request.form['porciento'])/100
-    n_original=69
-    if n%2==1:
-        n+=1
+    n_original = 69
+    if n % 2 == 1:
+        n += 1
     print("tipo de la ecuacion:", type(ecuacion))
     print("tipo de la a:", type(a))
     print("tipo de la b:", type(b))
     print("{} {} {} {}".format(a, b, n, ecuacion))
     print(request.form['button'])
     resultados = integral_plot(f(ecuacion), a, b, n)
-    real = "%.10f" % (realIntegral(xyz=ecuacion,a=a,b=b))
-    lista = compare(areas=resultados,real=real,porcentage=tolerancia)
-    
-    if n_original==69:
-            return render_template('index.html', url="static/photos/integral.png", real_area=real, comparacion = lista, nice=true)
-        
-    return render_template('index.html', url="static/photos/integral.png", real_area=real, comparacion = lista)
+    real = "%.10f" % (realIntegral(xyz=ecuacion, a=a, b=b))
+    lista = compare(areas=resultados, real=real, porcentage=tolerancia)
+
+    if n_original == 69:
+        return render_template('index.html', url="static/photos/integral.png", real_area=real, comparacion=lista, nice=true)
+
+    return render_template('index.html', url="static/photos/integral.png", real_area=real, comparacion=lista)
 
 
 if __name__ == "__main__":
