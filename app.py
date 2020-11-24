@@ -164,8 +164,10 @@ def butt():
     ecuacion = request.form['ecuacion']
     tolerancia = float(request.form['porciento'])/100
     n_original = n
-    if n % 2 == 1:
-        n += 1
+    while(n % 6 ==1)
+    {
+        n+=1
+    }
     print("tipo de la ecuacion:", type(ecuacion))
     print("tipo de la a:", type(a))
     print("tipo de la b:", type(b))
