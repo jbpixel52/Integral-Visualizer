@@ -68,7 +68,7 @@ def integral_plot(f, a, b, N):
     x = np.linspace(a, b, num=N)
     y = f(x)
     fig, ax = plt.subplots()
-    ax.set_facecolor('#ffa31a')
+    ax.set_facecolor('#FFDD00')
     ax.plot(x, y, 'ro', linewidth=3, color='pink')
     plt.grid(True, linestyle=':')
     plt.title(f'Integral')
@@ -163,7 +163,7 @@ def butt():
     n = int(request.form['n'])
     ecuacion = request.form['ecuacion']
     tolerancia = float(request.form['porciento'])/100
-    n_original = 69
+    n_original = n
     if n % 2 == 1:
         n += 1
     print("tipo de la ecuacion:", type(ecuacion))
