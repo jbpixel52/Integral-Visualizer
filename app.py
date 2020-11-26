@@ -103,20 +103,25 @@ def trapz(f, a, b, N):
     return T
 
 
-def simpson38(f, a, b, N):
-    h = float((b - a) / N)
-    fa = f(a)
-    fb = f(b)
+def simpson38(f, a, b, n):
+    h = (b-a)/n
+    suma = 0
 
-    integration = float(fa+fb)
-    for i in range(1, N):
-        k = a + i*h
-        if i % 2 == 0:
-            integration = integration + 2.0 * f(k)
-        else:
-            integration = integration + 3.0 * f(k)
-    integration = integration * 3.0 * h / 8.0
-    print(simpson38)
+    for k in range(2, n, 3):
+        x = a+(k-1)*h
+        suma = suma+f(x)
+
+    sum1 = 0
+    for k in range(3, n+1, 3):
+        x = a+(k-1)*h
+        sum1 = sum1+f(x)
+
+    sum2 = 0
+    for k in range(4, n-1, 3):
+        x = a+(k-1)*h
+        sum2 = sum2+f(x)
+
+    integration = (f(a)+3*suma+3*sum1+2*sum2+f(b))*3*h/8
     return integration
 
 
