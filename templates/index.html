@@ -92,19 +92,19 @@ font-weight: bold;
 
   <form action="{{ url_for('butt') }}" method="POST">
     <label>f(x):</label>
-    <input type="text" id="ecuacion" name="ecuacion" placeholder="Escribe la ecuacion" id="myInput" />
+    <input type="text" id="ecuacion" name="ecuacion" placeholder="{{eq}}" id="myInput" />
     <br />
     <br />
     <label>a:</label>
-    <input type="text" id="a" name="a" placeholder="Ingrese el primer punto" id="myInput" />
+    <input type="text" id="a" name="a" placeholder="{{punto_a}}" id="myInput" />
 
     <label>b:</label>
-    <input type="text" id="b" name="b" placeholder="Ingrese el segundo punto" id="myInput" />
+    <input type="text" id="b" name="b" placeholder="{{punto_b}}" id="myInput" />"
 
     <label>n:</label>
-    <input type="text" id="n" name="n" placeholder="Ingrese el numero de iteraciones" id="myInput" />
+    <input type="text" id="n" name="n" placeholder="{{iteraciones}}" id="myInput" />
     <label>% de Error:</label>
-    <input type="text" id="porciento" name="porciento" placeholder="Ingrese el % de error deseado" id="myInput" />
+    <input type="text" id="porciento" name="porciento" placeholder="{{porcentaje}}" id="myInput" />
     <br />
     <br />
     <div>

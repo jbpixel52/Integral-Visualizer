@@ -31,7 +31,7 @@ def parse(expresion):
 
 @app.route("/")
 def index(name=None, methods=["GET", "POST"]):
-    return render_template("index.html", name=name)
+    return render_template("index.html", name=name,eq="Ingrese la ecuacion", punto_a="Ingresa el punto A",punto_b="Ingrese punto B",iteraciones="Ingrese el numero de iteraciones",porcentaje ="Ingrese el %% error deseado")
 
 
 @app.route("/plot")
@@ -45,7 +45,7 @@ def graphic():
             error = 'Invalid username/password'
     # the code below is executed if the request method
     # was GET or the credentials were invalid
-    return render_template('login.html', error=error)
+    return render_template('login.html', error=error )
 
 
 def f(xyz):
@@ -177,13 +177,13 @@ def butt():
     print("{} {} {} {}".format(a, b, n, ecuacion))
     print(request.form['button'])
     resultados = integral_plot(f(ecuacion), a, b, n)
-    real = "%.10f" % (realIntegral(xyz=ecuacion, a=a, b=b))
+    real = (realIntegral(xyz=ecuacion, a=a, b=b))
     lista = compare(areas=resultados, real=real, porcentage=tolerancia)
 
     if n_original == 69:
         return render_template('index.html', url="static/photos/integral.png", real_area=real, comparacion=lista, nice=true)
 
-    return render_template('index.html', url="static/photos/integral.png", real_area=real, comparacion=lista)
+    return render_template('index.html', url="static/photos/integral.png", real_area=real, comparacion=lista, eq=ecuacion, punto_a=str(a),punto_b=str(b),iteraciones=str(n),porcentaje =str(tolerancia*100))
 
 
 if __name__ == "__main__":
